@@ -1,4 +1,3 @@
-
 import 'dart:convert';
 import 'dart:math';
 
@@ -15,66 +14,61 @@ class WeatherApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // ...existing code...
-return MaterialApp(
-  title: 'Flutter Weather (Demo)',
-  theme: ThemeData(
-    // Seed-based color scheme for consistent theming
-    colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-    useMaterial3: true,
+    return MaterialApp(
+      title: 'Flutter Weather (Demo)',
+      theme: ThemeData(
+        // Seed-based color scheme for consistent theming
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        useMaterial3: true,
 
-    appBarTheme: const AppBarTheme(
-      backgroundColor: Colors.deepPurple,
-      foregroundColor: Colors.white,
-      elevation: 4,
-      centerTitle: true,
-    ),
+        appBarTheme: const AppBarTheme(
+          backgroundColor: Colors.deepPurple,
+          foregroundColor: Colors.white,
+          elevation: 4,
+          centerTitle: true,
+        ),
 
-    // ✅ Use CardThemeData instead of CardTheme
-    cardTheme: CardThemeData(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(14),
-      ),
-      elevation: 6,
-      color: Colors.white,
-      margin: EdgeInsets.zero,
-    ),
+        // ✅ Use CardThemeData instead of CardTheme
+        cardTheme: CardThemeData(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(14),
+          ),
+          elevation: 6,
+          color: Colors.white,
+          margin: EdgeInsets.zero,
+        ),
 
-    elevatedButtonTheme: ElevatedButtonThemeData(
-      style: ElevatedButton.styleFrom(
-        backgroundColor: Colors.deepPurple,
-        foregroundColor: Colors.white,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.deepPurple,
+            foregroundColor: Colors.white,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+          ),
+        ),
+
+        floatingActionButtonTheme: const FloatingActionButtonThemeData(
+          backgroundColor: Colors.deepPurpleAccent,
+          foregroundColor: Colors.white,
+        ),
+
+        inputDecorationTheme: InputDecorationTheme(
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+          filled: true,
+          fillColor: Colors.grey.shade100,
+          prefixIconColor: Colors.deepPurple,
+        ),
+
+        textTheme: ThemeData.light().textTheme.apply(
+          bodyColor: Colors.black87,
+          displayColor: Colors.black87,
         ),
       ),
-    ),
-
-    floatingActionButtonTheme: const FloatingActionButtonThemeData(
-      backgroundColor: Colors.deepPurpleAccent,
-      foregroundColor: Colors.white,
-    ),
-
-    inputDecorationTheme: InputDecorationTheme(
-      border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(12),
-      ),
-      filled: true,
-      fillColor: Colors.grey.shade100,
-      prefixIconColor: Colors.deepPurple,
-    ),
-
-    textTheme: ThemeData.light().textTheme.apply(
-      bodyColor: Colors.black87,
-      displayColor: Colors.black87,
-    ),
-  ),
-  home: const HomePage(),
-  debugShowCheckedModeBanner: false,
-);
-// ...existing code...
-
-
-
+      home: const HomePage(),
+      debugShowCheckedModeBanner: false,
+    );
+    // ...existing code...
   }
 }
 
@@ -89,7 +83,8 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin {
+class _HomePageState extends State<HomePage>
+    with SingleTickerProviderStateMixin {
   final TextEditingController _searchController = TextEditingController();
   List<String> _cities = [
     'New Delhi',
@@ -99,7 +94,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
     'Kolkata',
     'San Francisco',
     'London',
-    'Tokyo'
+    'Tokyo',
   ];
 
   late AnimationController _animController;
@@ -114,7 +109,10 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
       vsync: this,
       duration: const Duration(milliseconds: 900),
     );
-    _fadeAnim = CurvedAnimation(parent: _animController, curve: Curves.easeInOut);
+    _fadeAnim = CurvedAnimation(
+      parent: _animController,
+      curve: Curves.easeInOut,
+    );
     _fetchAllWeather();
   }
 
@@ -146,9 +144,9 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
     } catch (e) {
       // show snackbar
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text('Could not fetch weather for "$trimmed".'),
-        ));
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Could not fetch weather for "$trimmed".')),
+        );
       }
     }
   }
@@ -162,7 +160,11 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
 
   @override
   Widget build(BuildContext context) {
-    final filtered = _cities.where((c) => c.toLowerCase().contains(_searchController.text.toLowerCase())).toList();
+    final filtered = _cities
+        .where(
+          (c) => c.toLowerCase().contains(_searchController.text.toLowerCase()),
+        )
+        .toList();
 
     return Scaffold(
       appBar: AppBar(
@@ -172,7 +174,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
             onPressed: _fetchAllWeather,
             icon: const Icon(Icons.refresh),
             tooltip: 'Refresh all',
-          )
+          ),
         ],
       ),
       body: Column(
@@ -202,7 +204,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                   },
                   icon: const Icon(Icons.clear),
                   label: const Text('Clear'),
-                )
+                ),
               ],
             ),
           ),
@@ -213,7 +215,10 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                     onRefresh: _fetchAllWeather,
                     child: ListView.builder(
                       physics: const AlwaysScrollableScrollPhysics(),
-                      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 8,
+                        horizontal: 12,
+                      ),
                       itemCount: filtered.length,
                       itemBuilder: (context, index) {
                         final city = filtered[index];
@@ -225,9 +230,12 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                             info: info,
                             onTap: () async {
                               if (info == null) return;
-                              await Navigator.of(context).push(MaterialPageRoute(
-                                builder: (_) => DetailPage(city: city, info: info),
-                              ));
+                              await Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (_) =>
+                                      DetailPage(city: city, info: info),
+                                ),
+                              );
                             },
                           ),
                         );
@@ -262,15 +270,22 @@ class WeatherCard extends StatefulWidget {
   State<WeatherCard> createState() => _WeatherCardState();
 }
 
-class _WeatherCardState extends State<WeatherCard> with SingleTickerProviderStateMixin {
+class _WeatherCardState extends State<WeatherCard>
+    with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _elevAnim;
 
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(vsync: this, duration: const Duration(milliseconds: 400));
-    _elevAnim = Tween<double>(begin: 2, end: 12).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 400),
+    );
+    _elevAnim = Tween<double>(
+      begin: 2,
+      end: 12,
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
   }
 
   @override
@@ -282,7 +297,9 @@ class _WeatherCardState extends State<WeatherCard> with SingleTickerProviderStat
   @override
   Widget build(BuildContext context) {
     final info = widget.info;
-    final tempText = info != null ? '${info.temperature.toStringAsFixed(1)}°C' : '--';
+    final tempText = info != null
+        ? '${info.temperature.toStringAsFixed(1)}°C'
+        : '--';
     final subtitle = info != null ? info.condition : 'No data';
 
     return GestureDetector(
@@ -295,7 +312,9 @@ class _WeatherCardState extends State<WeatherCard> with SingleTickerProviderStat
         builder: (context, child) {
           return Card(
             elevation: _elevAnim.value,
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(14),
+            ),
             margin: const EdgeInsets.symmetric(vertical: 8),
             child: Padding(
               padding: const EdgeInsets.all(12.0),
@@ -305,7 +324,13 @@ class _WeatherCardState extends State<WeatherCard> with SingleTickerProviderStat
                     tag: 'card_${widget.city}',
                     child: CircleAvatar(
                       radius: 30,
-                      child: Text(widget.city.substring(0, 1), style: const TextStyle(fontSize: 24, color: Colors.white)),
+                      child: Text(
+                        widget.city.substring(0, 1),
+                        style: const TextStyle(
+                          fontSize: 24,
+                          color: Colors.white,
+                        ),
+                      ),
                       backgroundColor: Colors.indigoAccent,
                     ),
                   ),
@@ -314,14 +339,28 @@ class _WeatherCardState extends State<WeatherCard> with SingleTickerProviderStat
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(widget.city, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                        Text(
+                          widget.city,
+                          style: const TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                         const SizedBox(height: 6),
                         Text(subtitle, style: const TextStyle(fontSize: 14)),
                         const SizedBox(height: 8),
                         AnimatedSwitcher(
                           duration: const Duration(milliseconds: 500),
-                          transitionBuilder: (child, anim) => ScaleTransition(scale: anim, child: child),
-                          child: Text(tempText, key: ValueKey(tempText), style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w600)),
+                          transitionBuilder: (child, anim) =>
+                              ScaleTransition(scale: anim, child: child),
+                          child: Text(
+                            tempText,
+                            key: ValueKey(tempText),
+                            style: const TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
                         ),
                       ],
                     ),
@@ -329,7 +368,8 @@ class _WeatherCardState extends State<WeatherCard> with SingleTickerProviderStat
                   IconButton(
                     onPressed: () {
                       // remove city
-                      final homeState = context.findAncestorStateOfType<_HomePageState>();
+                      final homeState = context
+                          .findAncestorStateOfType<_HomePageState>();
                       if (homeState != null) {
                         homeState.setState(() {
                           homeState._cities.remove(widget.city);
@@ -338,7 +378,7 @@ class _WeatherCardState extends State<WeatherCard> with SingleTickerProviderStat
                     },
                     icon: const Icon(Icons.delete_outline),
                     tooltip: 'Remove',
-                  )
+                  ),
                 ],
               ),
             ),
@@ -364,37 +404,108 @@ class DetailPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Hero(tag: 'card_$city', child: Material(shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)), elevation: 6, child: Container(padding: const EdgeInsets.all(16), child: Row(children: [
-              CircleAvatar(radius: 36, child: Text(city.substring(0,1), style: const TextStyle(fontSize: 28, color: Colors.white)), backgroundColor: Colors.indigoAccent),
-              const SizedBox(width: 16),
-              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                Text(city, style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
-                const SizedBox(height: 6),
-                Text(info.condition, style: const TextStyle(fontSize: 16)),
-              ])
-            ])))),
+            Hero(
+              tag: 'card_$city',
+              child: Material(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                elevation: 6,
+                child: Container(
+                  padding: const EdgeInsets.all(16),
+                  child: Row(
+                    children: [
+                      CircleAvatar(
+                        radius: 36,
+                        child: Text(
+                          city.substring(0, 1),
+                          style: const TextStyle(
+                            fontSize: 28,
+                            color: Colors.white,
+                          ),
+                        ),
+                        backgroundColor: Colors.indigoAccent,
+                      ),
+                      const SizedBox(width: 16),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            city,
+                            style: const TextStyle(
+                              fontSize: 22,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          const SizedBox(height: 6),
+                          Text(
+                            info.condition,
+                            style: const TextStyle(fontSize: 16),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
 
             const SizedBox(height: 20),
             Card(
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
               child: Padding(
                 padding: const EdgeInsets.all(12.0),
                 child: Column(
                   children: [
-                    Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [Text('Temperature', style: sub), Text('${info.temperature.toStringAsFixed(1)} °C', style: val)]),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text('Temperature', style: sub),
+                        Text(
+                          '${info.temperature.toStringAsFixed(1)} °C',
+                          style: val,
+                        ),
+                      ],
+                    ),
                     const SizedBox(height: 8),
-                    Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [Text('Feels Like', style: sub), Text('${info.feelsLike.toStringAsFixed(1)} °C', style: val)]),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text('Feels Like', style: sub),
+                        Text(
+                          '${info.feelsLike.toStringAsFixed(1)} °C',
+                          style: val,
+                        ),
+                      ],
+                    ),
                     const SizedBox(height: 8),
-                    Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [Text('Humidity', style: sub), Text('${info.humidity}% ', style: val)]),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text('Humidity', style: sub),
+                        Text('${info.humidity}% ', style: val),
+                      ],
+                    ),
                     const SizedBox(height: 8),
-                    Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [Text('Wind Speed', style: sub), Text('${info.windSpeed} m/s', style: val)]),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text('Wind Speed', style: sub),
+                        Text('${info.windSpeed} m/s', style: val),
+                      ],
+                    ),
                   ],
                 ),
               ),
             ),
 
             const SizedBox(height: 20),
-            const Text('Hourly (mock)', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+            const Text(
+              'Hourly (mock)',
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            ),
             const SizedBox(height: 8),
             SizedBox(
               height: 120,
@@ -402,21 +513,36 @@ class DetailPage extends StatelessWidget {
                 scrollDirection: Axis.horizontal,
                 itemCount: 12,
                 itemBuilder: (context, idx) {
-                  final temp = info.temperature + (idx % 3 == 0 ? 1.5 * idx : -0.8 * idx);
+                  final temp =
+                      info.temperature +
+                      (idx % 3 == 0 ? 1.5 * idx : -0.8 * idx);
                   return Container(
                     width: 92,
                     margin: const EdgeInsets.symmetric(horizontal: 8),
                     child: Card(
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-                          Text('${(DateTime.now().hour + idx) % 24}:00', style: const TextStyle(fontSize: 12)),
-                          const SizedBox(height: 8),
-                          const Icon(Icons.wb_sunny),
-                          const SizedBox(height: 8),
-                          Text('${temp.toStringAsFixed(1)} °C', style: const TextStyle(fontWeight: FontWeight.bold)),
-                        ]),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              '${(DateTime.now().hour + idx) % 24}:00',
+                              style: const TextStyle(fontSize: 12),
+                            ),
+                            const SizedBox(height: 8),
+                            const Icon(Icons.wb_sunny),
+                            const SizedBox(height: 8),
+                            Text(
+                              '${temp.toStringAsFixed(1)} °C',
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   );
@@ -441,13 +567,21 @@ class WeatherInfo {
   final double windSpeed;
   final String condition;
 
-  WeatherInfo({required this.temperature, required this.feelsLike, required this.humidity, required this.windSpeed, required this.condition});
+  WeatherInfo({
+    required this.temperature,
+    required this.feelsLike,
+    required this.humidity,
+    required this.windSpeed,
+    required this.condition,
+  });
 
   factory WeatherInfo.fromJson(Map<String, dynamic> json) {
     final main = json['main'] ?? {};
     final wind = json['wind'] ?? {};
     final weatherList = json['weather'] as List<dynamic>? ?? [];
-    final condition = weatherList.isNotEmpty ? weatherList[0]['main'] ?? 'Clear' : 'Clear';
+    final condition = weatherList.isNotEmpty
+        ? weatherList[0]['main'] ?? 'Clear'
+        : 'Clear';
 
     return WeatherInfo(
       temperature: (main['temp'] as num?)?.toDouble() ?? 0.0,
@@ -470,9 +604,13 @@ class WeatherService {
       final temp = 10 + rnd.nextDouble() * 25; // 10..35
       return WeatherInfo(
         temperature: double.parse(temp.toStringAsFixed(1)),
-        feelsLike: double.parse((temp - 0.5 + rnd.nextDouble()).toStringAsFixed(1)),
+        feelsLike: double.parse(
+          (temp - 0.5 + rnd.nextDouble()).toStringAsFixed(1),
+        ),
         humidity: 40 + rnd.nextInt(50),
-        windSpeed: double.parse((0.5 + rnd.nextDouble() * 8).toStringAsFixed(1)),
+        windSpeed: double.parse(
+          (0.5 + rnd.nextDouble() * 8).toStringAsFixed(1),
+        ),
         condition: ['Clear', 'Clouds', 'Rain', 'Mist', 'Haze'][rnd.nextInt(5)],
       );
     }

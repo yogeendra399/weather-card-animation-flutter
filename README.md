@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # flutter_application_1
 
 A new Flutter project.
@@ -14,3 +15,7 @@ A few resources to get you started if this is your first Flutter project:
 For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
+=======
+# weather-card-animation-flutter
+A Flutter application featuring animated weather cards with smooth transitions and interactive UI elements
+>>>>>>> f4a3103bececf4a895b983f796dd9a577f8fd79b

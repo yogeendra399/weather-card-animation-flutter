@@ -13,5 +13,3 @@ For help getting started with Flutter development, view the
 samples, guidance on mobile development, and a full API reference.
 =======
 # weather-card-animation-flutter
-A Flutter application featuring animated weather cards with smooth transitions and interactive UI elements
->>>>>>> f4a3103bececf4a895b983f796dd9a577f8fd79b

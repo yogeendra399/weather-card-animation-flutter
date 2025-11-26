@@ -6,11 +6,7 @@ void main() {
     // Minimal test app to ensure framework builds correctly
     await tester.pumpWidget(
       const MaterialApp(
-        home: Scaffold(
-          body: Center(
-            child: Text('Weather App Running'),
-          ),
-        ),
+        home: Scaffold(body: Center(child: Text('Weather App Running'))),
       ),
     );
 
